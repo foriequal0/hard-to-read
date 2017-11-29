@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "name": "Hard to read",
+    "version": "1.0",
+    "description": "Readability_test",
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "js": [
+                "hard-to-read.js"
+            ]
+        }
+    ]
+}
