@@ -1,0 +1,25 @@
+{
+  "name": "hard-to-read",
+  "version": "0.0.1",
+  "description": "A WebExtensions that shows the readability of text on the tooltip",
+  "main": "build/hard-to-read.js",
+  "scripts": {
+    "build": "webpack && web-ext build -s build --overwrite-dest",
+    "run": "webpack && web-ext run -s build & webpack --watch & wait",
+    "web-ext": "web-ext"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foriequal0/hard-to-read.git"
+  },
+  "author": "SeongChan Lee <foriequal@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/foriequal0/hard-to-read/issues"
+  },
+  "homepage": "https://github.com/foriequal0/hard-to-read#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.2.3",
+    "web-ext": "^2.2.2",
+    "webpack": "^3.10.0"
+  }
+}
