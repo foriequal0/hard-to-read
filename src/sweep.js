@@ -11,7 +11,7 @@ export function sweep(callback) {
     traverse(document.body, callback);
 }
 
-export default function sweep_and_watch(callback) {
+export default function sweepAndWatch(callback) {
     traverse(document.body, callback);
 
     var observer = new MutationObserver(function (changes) {

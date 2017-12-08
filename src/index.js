@@ -1,10 +1,10 @@
 'use strict'
-import sweep_and_watch from "./sweep.js"
-import dummy_formular from "./formulars/dummy.js"
+import sweepAndWatch from "./sweep.js"
+import dummyFormular from "./formulars/dummy.js"
 
 const tooltipAttribute = "tooltip-" + Math.floor((Math.random() * 1000000) + 1);
 
-function append_rule(css) {
+function appendRule(css) {
     var head = document.getElementsByTagName('head')[0]; 
     var newCss = document.createElement('style');
     newCss.type = "text/css"; 
@@ -12,7 +12,7 @@ function append_rule(css) {
     head.appendChild(newCss); 
 }
 
-append_rule(`
+appendRule(`
 *:hover > [${tooltipAttribute}] {
     position: relative;
     visibility: hidden;
@@ -35,7 +35,7 @@ var converted = new WeakSet();
  * @param {Element} root
  * @param {Function} method 
  */
-function attach_level(root, method) {
+function attachLevel(root, method) {
     if (root.nodeType !== 1 || root.nodeName !== "P" || converted.has(root))
         return;
 
@@ -55,4 +55,4 @@ function attach_level(root, method) {
     converted.add(root);
 }
 
-sweep_and_watch((root) => attach_level(root, dummy_formular));
+sweepAndWatch((root) => attachLevel(root, dummyFormular));
