@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A WebExtensions that shows the readability of text on the tooltip",
   "main": "build/hard-to-read.js",
+  "module": "src/index.js",
   "scripts": {
     "build": "webpack && web-ext build -s build --overwrite-dest",
     "run": "webpack && concurrently --kill-others \"webpack --watch\" \"web-ext run -s build\"",
@@ -22,5 +23,8 @@
     "copy-webpack-plugin": "^4.2.3",
     "web-ext": "^2.2.2",
     "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "tooltip.js": "^1.1.7"
   }
 }
