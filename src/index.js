@@ -1,8 +1,33 @@
 'use strict'
 import sweep_and_watch from "./sweep.js"
 import dummy_formular from "./formulars/dummy.js"
-import Tooltip from "tooltip.js"
- 
+
+function append_rule(css) {
+    var head = document.getElementsByTagName('head')[0]; 
+    var newCss = document.createElement('style');
+    newCss.type = "text/css"; 
+    newCss.innerHTML = css; 
+    head.appendChild(newCss); 
+}
+
+append_rule(`
+*:hover > [tooltip] {
+    position: relative;
+    visibility: hidden;
+}
+*:hover > [tooltip]:before {
+    position: absolute;
+    visibility: visible;
+    font-size: 1rem;
+    content: attr(tooltip);
+    bottom: calc(100% + 1em);
+    background-color: black;
+    box-shadow: 0px 0px 3px 3px black;
+    padding: 0px 0.5em;
+    color: white;
+    white-space: nowrap;
+}`);
+
 var converted = new WeakSet();
 /**
  * @param {Element} root
@@ -15,23 +40,16 @@ function attach_level(root, method) {
     const level = method(root.textContent);
     if (level == null)
         return;
+    
+    const tooltip = document.createElement("span");
+    tooltip.setAttribute("tooltip", "level: " + level);
 
-    const div = document.createElement("div");
-    div.innerText = "level: " + level;
-    Object.assign(div.style, {
-        "opacity": 1,
-        "padding": "0em 0.5em",
-        "box-shadow": "0px 0px 5px 5px gray",
-        "color": "white",
-        "background-color": "gray"
-    });
-
-    const tooltip = new Tooltip(root, {
-        placement: 'top-start',
-        html: true, 
-        title: div,
-    });
-
+    const already = root.querySelector("[tooltip]");
+    if (already != null) {
+        root.removeChild(already);
+    }
+    
+    root.insertAdjacentElement('afterbegin', tooltip);
     converted.add(root);
 }
 
