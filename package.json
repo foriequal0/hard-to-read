@@ -25,5 +25,6 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "compromise": "^11.2.1"
   }
 }

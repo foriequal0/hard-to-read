@@ -1,6 +1,6 @@
 'use strict'
 import sweepAndWatch from "./sweep.js"
-import dummyFormular from "./formulars/dummy.js"
+import daleChall from "./formulars/daleChall.js"
 
 const tooltipAttribute = "tooltip-" + Math.floor((Math.random() * 1000000) + 1);
 
@@ -39,20 +39,18 @@ function attachLevel(root, method) {
     if (root.nodeType !== 1 || root.nodeName !== "P" || converted.has(root))
         return;
 
-    const level = method(root.textContent);
+    const level = method(root);
     if (level == null)
         return;
     
     const tooltipAnchor = document.createElement("span");
     tooltipAnchor.setAttribute(tooltipAttribute, "level: " + level);
-
-    const already = root.querySelector(`[${tooltipAttribute}]`);
-    if (already != null) {
-        root.removeChild(already);
-    }
-    
     root.insertAdjacentElement('afterbegin', tooltipAnchor);
     converted.add(root);
 }
 
-sweepAndWatch((root) => attachLevel(root, dummyFormular));
+try {
+    sweepAndWatch((root) => attachLevel(root, daleChall));
+} catch (e) {
+    console.error(e);
+}
