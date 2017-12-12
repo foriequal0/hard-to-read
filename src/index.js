@@ -30,23 +30,30 @@ appendRule(`
     white-space: nowrap;
 }`);
 
-var converted = new WeakSet();
+var attached = new WeakSet();
 /**
  * @param {Element} root
  * @param {Function} method 
  */
 function attachLevel(root, method) {
-    if (root.nodeType !== 1 || root.nodeName !== "P" || converted.has(root))
+    if (root.nodeType !== 1 || root.nodeName !== "P" || attached.has(root))
         return;
 
-    const level = method(root);
-    if (level == null)
-        return;
+    function lazyAttach(e) {
+        console.log(this);
+        const level = method(this);
+        if (level == null)
+            return;
     
-    const tooltipAnchor = document.createElement("span");
-    tooltipAnchor.setAttribute(tooltipAttribute, "level: " + level);
-    root.insertAdjacentElement('afterbegin', tooltipAnchor);
-    converted.add(root);
+        const tooltipAnchor = document.createElement("span");
+        tooltipAnchor.setAttribute(tooltipAttribute, "level: " + level);
+        this.insertAdjacentElement('afterbegin', tooltipAnchor);
+
+        this.removeEventListener('mouseenter', lazyAttach);
+    };
+
+    root.addEventListener('mouseenter', lazyAttach);
+    attached.add(root);
 }
 
 try {
